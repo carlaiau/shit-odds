@@ -1,6 +1,6 @@
 # 💩 Shit Odds Compare & EV Finder
 
-ShitOdds is an odds comparison web app for people who are tired of sportsbooks serving up shit odds. It is powered by data from [the-odds-api.com](https://the-odds-api.com). It also includes Pinnacle and de-vigs Pinnacle lines to show you the real probabilities, and highlights softbook edges so you can see where value actually exists.
+[ShitOdds](https://www.shitodds.com) is an odds comparison web app for people who are tired of sportsbooks serving up shit odds. It is powered by data from [the-odds-api.com](https://the-odds-api.com). It also includes Pinnacle and de-vigs Pinnacle lines to show you the real probabilities, and highlights softbook edges so you can see where value may actually exist.
 
 There are no ads, and we aimed for a mobile first fast experience rather than the majority of odd comparison services out there.
 

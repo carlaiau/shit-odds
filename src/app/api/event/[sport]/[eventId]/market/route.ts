@@ -1,16 +1,15 @@
 // app/api/event/[sport]/[eventId]/market/route.ts
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getOddsForEventServer } from "@/lib/odds";
 import { getSettingsFromCookies } from "@/lib/settings";
 
 export const dynamic = "force-dynamic"; // or cache: 'no-store'
 export const revalidate = 0;
 
-type Ctx = {
-  params: { sport: string; eventId: string };
-};
+type Params = { sport: string; eventId: string };
 
-export async function GET(req: Request, { params }: Ctx) {
+export async function GET(req: Request, ctx: { params: Promise<Params> }) {
+  const { sport, eventId } = await ctx.params;
   const { searchParams } = new URL(req.url);
   const market = searchParams.get("market") ?? "";
   if (!market) {
@@ -21,8 +20,8 @@ export async function GET(req: Request, { params }: Ctx) {
   const bookmakers = settings?.bookmakers ?? [];
 
   const data = await getOddsForEventServer(
-    params.sport, // already underscores from client
-    params.eventId,
+    sport,
+    eventId,
     [market],
     bookmakers
   );

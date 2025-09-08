@@ -28,22 +28,14 @@ import { Switch } from "../catalyst/switch";
 import { Dropdown, DropdownButton, DropdownMenu } from "../catalyst/dropdown";
 import { Text } from "../catalyst/text";
 
-function SideBarFilters({
-  sports,
-  currentGroup,
-  currentLeague,
-}: {
-  sports: GetSportsResult[] | undefined;
-  currentGroup?: string;
-  currentLeague?: string;
-}) {
+function SideBarFilters({ sports }: { sports: GetSportsResult[] | undefined }) {
   const router = useRouter();
   const params = useParams<{ sportGroup: string; sportKey?: string }>();
   const { settings, updateSettings } = useSettings();
 
   // Prefer SSR values; fallback to params
-  const sportGroup = (currentGroup ?? params.sportGroup ?? "").toString();
-  const sportKey = (currentLeague ?? params.sportKey ?? "").toString();
+  const sportGroup = params.sportGroup ?? "";
+  const sportKey = params.sportKey ?? "";
 
   return (
     <SidebarBody>

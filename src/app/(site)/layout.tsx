@@ -22,26 +22,14 @@ export const revalidate = 60;
 
 export default async function Layout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: { sportGroup: string; sportKey?: string };
 }) {
   const sports = await getSportsServer();
 
   return (
     <SidebarLayout
-      navbar={
-        <Navbar>
-          {sports && (
-            <NavbarFilters
-              sports={sports}
-              currentGroup={params.sportGroup}
-              currentLeague={params.sportKey}
-            />
-          )}
-        </Navbar>
-      }
+      navbar={<Navbar>{sports && <NavbarFilters sports={sports} />}</Navbar>}
       sidebar={
         <Sidebar>
           <SidebarHeader>
@@ -55,13 +43,7 @@ export default async function Layout({
             </SidebarItem>
           </SidebarHeader>
 
-          {sports && (
-            <SideBarFilters
-              sports={sports}
-              currentGroup={params.sportGroup}
-              currentLeague={params.sportKey}
-            />
-          )}
+          {sports && <SideBarFilters sports={sports} />}
 
           <SidebarFooter />
         </Sidebar>

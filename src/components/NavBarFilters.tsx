@@ -7,20 +7,12 @@ import type { GetSportsResult } from "../types";
 import { sportsToFilterOut } from "../config";
 import { NavbarSection, NavbarSpacer } from "../catalyst/navbar";
 
-function NavbarFilters({
-  sports,
-  currentGroup,
-  currentLeague,
-}: {
-  sports: GetSportsResult[] | undefined;
-  currentGroup?: string;
-  currentLeague?: string;
-}) {
+function NavbarFilters({ sports }: { sports: GetSportsResult[] | undefined }) {
   const router = useRouter();
   const params = useParams<{ sportGroup: string; sportKey?: string }>();
 
-  const sportGroup = (currentGroup ?? params.sportGroup ?? "").toString();
-  const sportKey = (currentLeague ?? params.sportKey ?? "").toString();
+  const sportGroup = params.sportGroup ?? "";
+  const sportKey = params.sportKey ?? "";
 
   return (
     <>
