@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev --turbopack -p 3002",
     "build": "next build --turbopack",
     "start": "next start"
   },
@@ -13,6 +13,7 @@
     "@heroicons/react": "^2.2.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "fathom-client": "^3.7.2",
     "lodash": "^4.17.21",
     "motion": "^12.23.12",
     "next": "^15.5.2",
@@ -25,18 +26,18 @@
     "swiper": "^11.2.10"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
     "@types/lodash": "^4.17.20",
     "@types/node": "24.3.1",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "@types/react-world-flags": "^1.6.0",
-    "globals": "^16.3.0",
-    "openapi-typescript": "^7.9.1",
-    "typescript": "~5.8.3",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
-    "@eslint/eslintrc": "^3"
+    "globals": "^16.3.0",
+    "openapi-typescript": "^7.9.1",
+    "tailwindcss": "^4",
+    "typescript": "~5.8.3"
   }
 }
