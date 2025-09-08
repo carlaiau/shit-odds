@@ -222,13 +222,13 @@ function SideBarFilters({ sports }: { sports: GetSportsResult[] | undefined }) {
       </SidebarSection>
       <SidebarSection>
         <SidebarHeading>Inactive Bookies</SidebarHeading>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap lg: gap-2">
           {bookiesThatAreSupported ? (
             _.uniqBy(bookiesThatAreSupported, "countryCode").map((c) => (
               <Dropdown key={c.key}>
                 <DropdownButton
                   key={c.countryCode}
-                  className="mt-2 bg-white dark:bg-zinc-700 cursor-pointer"
+                  className="lg:mt-2 bg-white dark:bg-zinc-700 cursor-pointer"
                   outline
                 >
                   {c.countryCode && (
@@ -237,12 +237,12 @@ function SideBarFilters({ sports }: { sports: GetSportsResult[] | undefined }) {
                         <img
                           src="/flags/eu.svg"
                           alt="EU"
-                          className="inline w-8 h-8"
+                          className="inline w-4 h-4 lg:w-6 lg:h-6"
                         />
                       ) : (
                         <Flag
                           code={c?.countryCode}
-                          className="inline w-8 h-8"
+                          className="inline w-4 h-4 lg:w-6 lg:h-6"
                         />
                       )}
                     </>
@@ -300,8 +300,6 @@ function SideBarFilters({ sports }: { sports: GetSportsResult[] | undefined }) {
           )}
         </div>
       </SidebarSection>
-
-      <SidebarSpacer />
     </SidebarBody>
   );
 }

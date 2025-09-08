@@ -1,14 +1,12 @@
 import { Navbar } from "@/catalyst/navbar";
 import {
   Sidebar,
-  SidebarFooter,
   SidebarHeader,
   SidebarItem,
   SidebarLabel,
 } from "@/catalyst/sidebar";
 import { SidebarLayout } from "@/catalyst/sidebar-layout";
 import { HomeIcon, QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
-
 import { getSportsServer } from "@/lib/odds";
 
 import NavbarFilters from "@/components/NavBarFilters";
@@ -41,11 +39,16 @@ export default async function Layout({
               <SidebarLabel>Info</SidebarLabel>
               <QuestionMarkCircleIcon className="h-5 w-5 text-punt-400" />
             </SidebarItem>
+            <SidebarItem to="https://github.com/carlaiau/shit-odds">
+              <div className="flex justify-between w-full">
+                <p>Github Repo</p>
+
+                <img src="/icons/github.svg" className="w-4 h-4 opacity-70" />
+              </div>
+            </SidebarItem>
           </SidebarHeader>
 
           {sports && <SideBarFilters sports={sports} />}
-
-          <SidebarFooter />
         </Sidebar>
       }
     >

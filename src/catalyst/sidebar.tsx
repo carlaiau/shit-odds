@@ -43,7 +43,7 @@ export function SidebarBody({
       {...props}
       className={clsx(
         className,
-        "flex flex-1 flex-col overflow-y-auto p-4 [&>[data-slot=section]+[data-slot=section]]:mt-8"
+        "flex flex-1 flex-col overflow-y-auto p-2 lg:p-4 lg:[&>[data-slot=section]+[data-slot=section]]:mt-8 [&>[data-slot=section]+[data-slot=section]]:mt-2"
       )}
     />
   );

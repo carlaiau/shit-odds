@@ -6,8 +6,8 @@ import { Text } from "@/catalyst/text";
 const Info = () => {
   return (
     <div className="w-full md:w-3/4 lg:w-2/3 flex-col pt-4 px-8 flex items-start gap-4 bg-white dark:bg-zinc-800 rounded-md">
-      <div className="mb-8 flex flex-col gap-2">
-        <Heading>Softbook Finder</Heading>
+      <div className="mb-4 flex flex-col gap-2">
+        <Heading>Open Source Softbook Finder</Heading>
         <Text>
           Our goal is to make it easy to compare odds across many bookmakers,
           and to spot +EV opportunities assuming Pinnacles lines are the closest
@@ -28,7 +28,7 @@ const Info = () => {
           </li>
         </ul>
       </div>
-      <div className="mb-8 flex flex-col gap-2">
+      <div className="mb-4 flex flex-col gap-2">
         <Subheading>No-Vig Pinnacle (NVP) and EV</Subheading>
         <Text>
           We treat Pinnacle as the sharpest book. When their odds exist, we

@@ -6,7 +6,7 @@ import { SportProvider } from "@/context/sports";
 
 import { getSettingsFromCookies, defaultSettings } from "@/lib/settings";
 import { getSportsServer } from "@/lib/odds";
-
+import { FathomAnalytics } from "./fathom";
 export const metadata: Metadata = {
   title: "💩 ShitOdds",
   description: "Finding value in a sea of shit",
@@ -22,6 +22,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
+        <FathomAnalytics />
         <SettingsProvider initial={settings}>
           <SportProvider initialData={sports}>{children}</SportProvider>
         </SettingsProvider>
