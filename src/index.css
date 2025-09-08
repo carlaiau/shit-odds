@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: Inter, sans-serif;
+  --font-sans--font-feature-settings: 'cv11';
+
+
+
+  /*--color-punt-100: #f4f6fb; */
+  /*--color-punt-100: #e9edf5; */
+  /*--color-punt-200: #ced8e9; */
+  /*--color-punt-300: #a2b7d7; */
+  /*--color-punt-400: #7190bf; */
+  /*--color-punt-1000: #4f73a8; */
+  /*--color-punt-600: #42639b; */
+  /*--color-punt-700: #324872; */
+  /*--color-punt-800: #2c3f60; */
+  /*--color-punt-900: #293651; */
+  /*--color-punt-950: #1b2336; */
+
+
+  /* --color-punt-100: #ecf9ff; */
+  /* --color-punt-100: #d4f0ff; */
+  /* --color-punt-200: #b3e6ff; */
+  /* --color-punt-300: #7fd8ff; */
+  /* --color-punt-400: #43bfff; */
+  /* --color-punt-1000: #189eff; */
+  /* --color-punt-600: #007dff; */
+  /* --color-punt-700: #0064fb; */
+  /* --color-punt-800: #0350ca; */
+  /* --color-punt-900: #0a4aa4; */
+  /* --color-punt-950: #0c2c5f; */
+
+  /* --color-punt-100: #f2fbf3; */
+  /* --color-punt-100: #e2f6e4; */
+  /* --color-punt-200: #c6ecca; */
+  /* --color-punt-300: #a0dfa8; */
+  /* --color-punt-400: #64c470; */
+  /* --color-punt-1000: #3fa84d; */
+  /* --color-punt-600: #2f8a3c; */
+  /* --color-punt-700: #286d32; */
+  /* --color-punt-800: #24572b; */
+  /* --color-punt-900: #1f4825; */
+  /* --color-punt-950: #0c2711; */
+
+
+  --color-punt-50: #f2f7fd;
+  --color-punt-100: #e4eefa;
+  --color-punt-200: #c3dcf4;
+  --color-punt-300: #8ec0eb;
+  --color-punt-400: #529fde;
+  --color-punt-500: #2a7dc1;
+  --color-punt-600: #1d67ac;
+  --color-punt-700: #19538b;
+  --color-punt-800: #184774;
+  --color-punt-900: #193c61;
+  --color-punt-950: #112640;
+}

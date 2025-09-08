@@ -1,0 +1,15 @@
+.swiper-slide:nth-last-child(1):nth-child(n+3) > a,
+.swiper-slide:nth-last-child(1):nth-child(n+3)> div{
+  margin-right: 10px;
+}
+
+
+@media screen and (max-width: 640px) {
+    .swiper-slide:only-child {
+        width: calc(100% - 10px) !important
+    }
+    #group-page .swiper-slide:only-child {
+      width: calc(100% - 20px) !important
+    }
+}
+

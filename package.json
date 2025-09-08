@@ -1,0 +1,42 @@
+{
+  "name": "client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.7",
+    "@heroicons/react": "^2.2.0",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "lodash": "^4.17.21",
+    "motion": "^12.23.12",
+    "next": "^15.5.2",
+    "openapi-fetch": "^0.14.0",
+    "openapi-typescript-fetch": "^2.2.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-tooltip": "^5.29.1",
+    "react-world-flags": "^1.6.0",
+    "swiper": "^11.2.10"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.20",
+    "@types/node": "24.3.1",
+    "@types/react": "^19.1.10",
+    "@types/react-dom": "^19.1.7",
+    "@types/react-world-flags": "^1.6.0",
+    "globals": "^16.3.0",
+    "openapi-typescript": "^7.9.1",
+    "typescript": "~5.8.3",
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.2",
+    "@eslint/eslintrc": "^3"
+  }
+}

@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --color-punt-50: #f2f7fd;
+  --color-punt-100: #e4eefa;
+  --color-punt-200: #c3dcf4;
+  --color-punt-300: #8ec0eb;
+  --color-punt-400: #529fde;
+  --color-punt-500: #2a7dc1;
+  --color-punt-600: #1d67ac;
+  --color-punt-700: #19538b;
+  --color-punt-800: #184774;
+  --color-punt-900: #193c61;
+  --color-punt-950: #112640;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.swiper-slide:nth-last-child(1):nth-child(n+3)>a,
+.swiper-slide:nth-last-child(1):nth-child(n+3)>div {
+  margin-right: 10px;
+}
+
+
+@media screen and (max-width: 640px) {
+  .swiper-slide:only-child {
+    width: calc(100% - 10px) !important
+  }
+
+  #group-page .swiper-slide:only-child {
+    width: calc(100% - 20px) !important
+  }
+}
+
+@layer utilities {
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+}
