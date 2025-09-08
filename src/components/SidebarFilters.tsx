@@ -124,24 +124,27 @@ function SideBarFilters({ sports }: { sports: GetSportsResult[] | undefined }) {
       </SidebarSection>
       <SidebarSection className="mb-3">
         <SidebarHeading>Main market</SidebarHeading>
-        <Select
-          onChange={(e) => {
-            const newMarket = e.target.value;
-            if (newMarket === "") return;
-            updateSettings("defaultMarket", newMarket);
-          }} // onClick to capture option clicks
-        >
-          <option value="" disabled>
-            Choose a market
-          </option>
-          {marketsThatAreSupported.map((m) => {
-            return (
-              <option className="w-full" value={m.key} key={m.key}>
-                {m.label} {m.description ? ` - ${m.description}` : ""}
-              </option>
-            );
-          })}
-        </Select>
+        <Headless.Field>
+          <Select
+            value={settings.defaultMarket ?? ""}
+            onChange={(e) => {
+              const newMarket = e.target.value;
+              if (newMarket === "") return;
+              updateSettings("defaultMarket", newMarket);
+            }} // onClick to capture option clicks
+          >
+            <option value="" disabled>
+              Choose a market
+            </option>
+            {marketsThatAreSupported.map((m) => {
+              return (
+                <option className="w-full" value={m.key} key={m.key}>
+                  {m.label} {m.description ? ` - ${m.description}` : ""}
+                </option>
+              );
+            })}
+          </Select>
+        </Headless.Field>
       </SidebarSection>
       <SidebarSection>
         <SidebarHeading>In-Play</SidebarHeading>

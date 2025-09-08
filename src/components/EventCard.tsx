@@ -1,10 +1,7 @@
 import _ from "lodash";
 
 import type { GetOddsResult, GetSportsResult } from "../types";
-import { getMatchTimeInfo } from "../utils";
-
 import { Subheading } from "../catalyst/heading";
-import { Text } from "../catalyst/text";
 import { Swiper, SwiperSlide } from "swiper/react";
 // import Swiper styles
 import "swiper/css";
@@ -17,6 +14,7 @@ import { useSportData } from "../context/sports";
 import { useEffect, useState } from "react";
 import { marketsThatAreSupported, OurSwiperProps } from "../config";
 import { useSettings } from "../context/settings";
+import EventDate from "./EventDate";
 
 const EventCard = ({
   odd,
@@ -53,10 +51,6 @@ const EventCard = ({
 
   let event = odd;
 
-  const { startDate, hasStarted, relative } = getMatchTimeInfo(
-    event.commence_time ? event.commence_time : 0
-  );
-
   return (
     <div
       className={`lg:rounded-md ${
@@ -82,15 +76,7 @@ const EventCard = ({
             ? event.home_team + " at " + event.away_team
             : event.sport_title}
         </Subheading>
-
-        {!hasStarted ? (
-          <div className="">
-            <Text>{startDate}</Text>
-            <Text>{relative}</Text>
-          </div>
-        ) : (
-          <Text>LIVE</Text>
-        )}
+        <EventDate event={event} />
       </div>
 
       {/* Odds Table */}

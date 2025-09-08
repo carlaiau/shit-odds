@@ -3,6 +3,7 @@ import {
   createContext,
   useContext,
   useOptimistic,
+  startTransition,
   type ReactNode,
 } from "react";
 import type { Settings } from "@/lib/settings";
@@ -29,7 +30,6 @@ export function SettingsProvider({
   children: ReactNode;
   initial: Settings;
 }) {
-  // useOptimistic takes initial state and a reducer
   const [optimistic, addOptimistic] = useOptimistic(
     initial,
     (state: Settings, action: Partial<Settings>): Settings => ({
@@ -42,22 +42,30 @@ export function SettingsProvider({
     key,
     value
   ) => {
-    // optimistic update: immediately merge new key/value
-    addOptimistic({ [key]: value } as Partial<Settings>);
+    // 1) optimistic update inside a transition
+    startTransition(() => {
+      addOptimistic({ [key]: value } as Partial<Settings>);
+    });
 
-    // then call server action
+    // 2) server action
     const next = await updateSettingsAction({ [key]: value } as any);
 
-    // commit final server state
-    addOptimistic(next);
+    // 3) reconcile with server state inside a transition
+    startTransition(() => {
+      addOptimistic(next);
+    });
   };
 
   const resetSettings = async () => {
-    addOptimistic(initial); // show immediate reset
+    startTransition(() => {
+      addOptimistic(initial);
+    });
 
     const next = await resetSettingsAction(initial);
 
-    addOptimistic(next); // sync with server’s response
+    startTransition(() => {
+      addOptimistic(next);
+    });
   };
 
   return (
