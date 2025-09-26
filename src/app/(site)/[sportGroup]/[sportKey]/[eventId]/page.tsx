@@ -14,6 +14,11 @@ import { Metadata } from "next";
 export const revalidate = 10;
 
 const capitalize = (s: string) => s.replace(/\b\w/g, (c) => c.toUpperCase());
+
+type Params = {
+  params: { sportGroup: string; sportKey: string; eventId: string };
+};
+
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { sportGroup, sportKey, eventId } = await params;
   const specificSport = capitalize(sportKey.replace(/-/g, " "));
@@ -34,10 +39,6 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     },
   };
 }
-
-type Params = {
-  params: { sportGroup: string; sportKey: string; eventId: string };
-};
 
 type MarketEntry = { market: string; bookmakers: string[] };
 

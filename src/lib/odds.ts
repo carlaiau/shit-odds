@@ -6,8 +6,10 @@ import type {
   GetOddsResult,
   GetEventMarketsResult,
   GetEventOddsResult,
+  GetHistoricalEventsResult,
+  GetHistoricalOddsForEventResult,
 } from "@/types";
-import { addDays } from "date-fns";
+import { addDays, parse } from "date-fns";
 
 const BASE_URL = "https://api.the-odds-api.com";
 const API_KEY = process.env.ODDS_API_KEY ?? "";
@@ -131,6 +133,62 @@ export async function getEventMarketsServer(
 
   if (error) {
     console.error("[odds] getEventMarketsServer error:", error);
+    return;
+  }
+  return data;
+}
+
+export async function getHistoricalEventsServer(
+  sportKey: string,
+  dateTo: string // YYYY-MM-DD
+): Promise<GetHistoricalEventsResult | undefined> {
+  const dateObject = parse(dateTo, "yyyy-MM-dd", new Date());
+  console.log({ dateTo, dateObject });
+  const { data, error } = await client.GET(
+    "/v4/historical/sports/{sport}/events",
+    {
+      next: { revalidate: 3600 },
+      params: {
+        path: { sport: sportKey },
+        query: {
+          apiKey: API_KEY,
+          date: isoNoMs(dateObject),
+        },
+      },
+    }
+  );
+  if (error) {
+    console.error("[odds] getHistoricalEventsServer error:", error);
+    return;
+  }
+  return data;
+}
+
+export async function getHistoricalOddsForEvent(
+  sportKey: string,
+  eventId: string,
+  bookmakers: string[],
+  markets: string[],
+  date: string // ISO8601 passed from the-odds-api
+): Promise<GetHistoricalOddsForEventResult | undefined> {
+  const { data, error } = await client.GET(
+    "/v4/historical/sports/{sport}/events/{eventId}/odds",
+    {
+      next: { revalidate: 3600 },
+      params: {
+        path: { sport: sportKey, eventId },
+        query: {
+          apiKey: API_KEY,
+          date,
+          regions: "us",
+          bookmakers: bookmakers.join(","),
+          markets: markets.join(","),
+        },
+      },
+    }
+  );
+  if (error) {
+    console.error("[odds] getHistoricalEventsServer error:", error);
     return;
   }
   return data;

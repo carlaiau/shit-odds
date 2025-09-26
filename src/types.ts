@@ -12,6 +12,11 @@ export type GetEventOddsResult =
 export type GetEventMarketsResult =
   paths["/v4/sports/{sport}/events/{eventId}/markets"]["get"]["responses"]["200"]["content"]["application/json"];
 
+export type GetHistoricalEventsResult =
+  paths["/v4/historical/sports/{sport}/events"]["get"]["responses"]["200"]["content"]["application/json"];
+export type GetHistoricalOddsForEventResult =
+  paths["/v4/historical/sports/{sport}/events/{eventId}/odds"]["get"]["responses"]["200"]["content"]["application/json"];
+
 export type SupportedBookmaker = {
   key: string;
   label: string;
