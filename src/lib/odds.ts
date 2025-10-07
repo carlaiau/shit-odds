@@ -15,7 +15,8 @@ const BASE_URL = "https://api.the-odds-api.com";
 const API_KEY = process.env.ODDS_API_KEY ?? "";
 
 const BOOKMAKERS = [
-  "ladbrokes",
+  "bet365_au",
+  "ladbrokes_au",
   "sportsbet",
   "unibet",
   "pinnacle",
