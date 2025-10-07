@@ -7,7 +7,6 @@ import { sportsToFilterOut } from "../../config";
 // import Swiper styles
 import { Link } from "../../catalyst/link";
 import { getSportsServer } from "@/lib/odds";
-import { Metadata } from "next";
 
 const Index = async () => {
   const sports = await getSportsServer();
@@ -24,12 +23,12 @@ const Index = async () => {
         Odds comparison, and EV compared to De-vigged Pinnacle. No ads.
         Presently Optimized for NFL Props.
       </Subheading>
-      <div className="w-full pr-2 lg:w-3/4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 mb-10">
-        <Link to={`/american-football/americanfootball-nfl/`}>
-          <div className="w-full py-10 px-2 border border-punt-300 rounded-md hover:shadow-lg text-left bg-white dark:bg-punt-900 dark:border-punt-700 flex flex-col items-center justify-center ">
-            <p className="capitalize text-lg   text-center lg:text-xl">NFL</p>
-          </div>
-        </Link>
+      <div className="mb-10 text-left">
+        <div className="bg-white inline-block  rounded-md border border-punt-300 dark:bg-punt-900 dark:border-punt-700">
+          <Link to={`/american-football/americanfootball-nfl/`}>
+            <p className="capitalize text-xl lg:text-xl px-3 py-1">NFL</p>
+          </Link>
+        </div>
       </div>
       <div className="w-full pr-2 lg:w-3/4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {groups.map((group) => (
