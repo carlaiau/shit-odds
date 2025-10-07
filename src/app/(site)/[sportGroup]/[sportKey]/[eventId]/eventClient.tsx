@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Grid } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
@@ -22,6 +22,15 @@ type Props = {
   availableMarkets: MarketEntry[];
 };
 
+const DEFAULT_ADDITIONAL_MARKETS = [
+  "player_reception_yds",
+  "player_rush_yds",
+  "player_pass_yds",
+  "player_reception_yds_alternate",
+  "player_rush_yds_alternate",
+  "player_pass_yds_alternate",
+  "player_anytime_td",
+];
 export default function EventClient({
   sportKey,
   eventId,
@@ -32,9 +41,25 @@ export default function EventClient({
     Record<string, GetEventOddsResult> | undefined
   >(undefined);
 
+  useEffect(() => {
+    DEFAULT_ADDITIONAL_MARKETS.forEach(async (market: string) => {
+      if (
+        availableMarkets.find(
+          (m) => m.market === market && m.bookmakers && m.bookmakers.length > 10
+        )
+      ) {
+        // load the first one we find
+        await openAdditionalMarket(market, true);
+      }
+    });
+  }, []);
+
   const additionalSwiperRef = useRef<SwiperType | null>(null);
 
-  const openAdditionalMarket = async (marketKey: string) => {
+  const openAdditionalMarket = async (
+    marketKey: string,
+    dontSwipe?: boolean
+  ) => {
     // already loaded? just slide to it
     if (additionalMarkets?.[marketKey]) {
       const idx = findSlideIndexByDataId(
@@ -62,6 +87,7 @@ export default function EventClient({
       [marketKey]: data as unknown as GetEventOddsResult,
     }));
 
+    if (dontSwipe) return;
     // wait for slide to mount then navigate
     requestAnimationFrame(() => {
       const idx = findSlideIndexByDataId(

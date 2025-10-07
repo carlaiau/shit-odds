@@ -14,6 +14,32 @@ import { addDays, parse } from "date-fns";
 const BASE_URL = "https://api.the-odds-api.com";
 const API_KEY = process.env.ODDS_API_KEY ?? "";
 
+const BOOKMAKERS = [
+  "ladbrokes",
+  "sportsbet",
+  "unibet",
+  "pinnacle",
+  "betonlineag",
+  "betmgm",
+  "betrivers",
+  "betus",
+  "bovada",
+  "williamhill_us",
+  "draftkings",
+  "fanatics",
+  "fanduel",
+  "lowvig",
+  "mybookieag",
+  "ballybet",
+  "betanysports",
+  "betparx",
+  "espnbet",
+  "fliff",
+  "hardrockbet",
+  "rebet",
+  "windcreek",
+];
+
 if (!API_KEY) {
   console.warn("[odds] Missing ODDS_API_KEY env var");
 }
@@ -69,7 +95,7 @@ export async function getOddsForSportServer(
           | "outrights",
         commenceTimeTo,
         commenceTimeFrom,
-        bookmakers: bookmakers.join(","),
+        bookmakers: BOOKMAKERS.join(","),
       },
     },
   });
@@ -98,7 +124,7 @@ export async function getOddsForEventServer(
           regions: "au",
           oddsFormat: "decimal",
           markets: markets.filter((m) => m !== "outrights").join(","),
-          bookmakers: bookmakers.join(","),
+          bookmakers: BOOKMAKERS.join(","),
         },
       },
     }
@@ -125,7 +151,7 @@ export async function getEventMarketsServer(
         query: {
           apiKey: API_KEY,
           regions: "au", // essentially ignored due to bookmakers filter
-          bookmakers: bookmakers.join(","),
+          bookmakers: BOOKMAKERS.join(","),
         },
       },
     }
