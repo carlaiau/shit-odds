@@ -159,16 +159,18 @@ export default function EventClient({
             additionalSwiperRef.current = s;
           }}
         >
-          {Object.entries(additionalMarkets).map(([marketKey, event]) => (
-            <SwiperSlide key={marketKey} data-id={marketKey}>
-              <OddsTable
-                event={event}
-                marketKey={marketKey}
-                title={marketKey.replace(/_/g, " ")}
-                isOnEventPage
-              />
-            </SwiperSlide>
-          ))}
+          {Object.entries(additionalMarkets)
+            .sort((a, b) => (a > b ? 1 : -1))
+            .map(([marketKey, event]) => (
+              <SwiperSlide key={marketKey} data-id={marketKey}>
+                <OddsTable
+                  event={event}
+                  marketKey={marketKey}
+                  title={marketKey.replace(/_/g, " ")}
+                  isOnEventPage
+                />
+              </SwiperSlide>
+            ))}
         </Swiper>
       )}
     </>
