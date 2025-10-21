@@ -30,6 +30,12 @@ const DEFAULT_ADDITIONAL_MARKETS = [
   "player_rush_yds_alternate",
   "player_pass_yds_alternate",
   "player_anytime_td",
+  "player_assists",
+  "player_points",
+  "player_rebounds",
+  "player_assists_alternate",
+  "player_points_alternate",
+  "player_rebounds_alternate",
 ];
 export default function EventClient({
   sportKey,
@@ -168,6 +174,9 @@ export default function EventClient({
                   marketKey={marketKey}
                   title={marketKey.replace(/_/g, " ")}
                   isOnEventPage
+                  isAdditionalMarket={DEFAULT_ADDITIONAL_MARKETS.includes(
+                    marketKey
+                  )}
                 />
               </SwiperSlide>
             ))}

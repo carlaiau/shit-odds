@@ -1,6 +1,6 @@
 // src/components/MarketOddsTables.tsx
 import React, { useMemo } from "react";
-import type { BookieWithPrice, GetEventOddsResult } from "../types";
+import type { BookieWithPrice, GetEventOddsResult, Outcome } from "../types";
 import { Subheading } from "../catalyst/heading";
 import { devigPowerMethod } from "../utils";
 import _ from "lodash";
@@ -25,6 +25,17 @@ const deVigLabel = "NVP";
 const includesPinnacle = (books: { key: string; title: string }[]) =>
   _.find(books, { key: "pinnacle" });
 
+const getLabelFromOutcome = (o: Outcome, withName?: boolean) => {
+  return (
+    (o.description?.trim() ?? o.name?.trim()) +
+    (withName === true
+      ? o.name && ["over", "under"].includes(o.name.toLowerCase())
+        ? "_" + o.name.toLowerCase().trim() + "_"
+        : ""
+      : "") +
+    (o.point != null ? `_${o.point}` : "")
+  );
+};
 function buildMatrix(event: GetEventOddsResult, marketKey: string) {
   if (!event.bookmakers) return;
   // Gather all bookmaker titles in stable order
@@ -48,23 +59,43 @@ function buildMatrix(event: GetEventOddsResult, marketKey: string) {
     if (!market.outcomes) continue;
 
     if (book.title == "Pinnacle") {
-      const toDevig = [];
+      const toDevig = {} as Record<string, number[]>;
       for (const o of market.outcomes) {
+        const labelForDevig = getLabelFromOutcome(o, false);
         if (o.price) {
-          toDevig.push(o.price);
+          if (toDevig[labelForDevig]) {
+            toDevig[labelForDevig] = [...toDevig[labelForDevig], o.price];
+          } else {
+            toDevig[labelForDevig] = [o.price];
+          }
         }
       }
-      const devigged = devigPowerMethod(toDevig, 1);
-      market.outcomes.forEach((o, idx) => {
-        const label =
-          (o.description?.trim() ?? o.name?.trim()) +
-          (o.point != null ? `_${o.point}` : "");
+      console.log({ toDevig });
 
+      market.outcomes.forEach((o) => {
+        const label = getLabelFromOutcome(o, true);
+        const labelToDeterminedDevig = getLabelFromOutcome(o, false);
+        const pricesToDevig = toDevig[labelToDeterminedDevig];
+        const devigged = devigPowerMethod(pricesToDevig, 1);
         if (!label) return;
-
+        console.log({
+          o,
+          label,
+          pricesToDevig,
+          devigged,
+          labelToDeterminedDevig,
+        });
+        const isOver = o.name && o.name.toLowerCase() === "over";
+        const isUnder = o.name && o.name.toLowerCase() === "under";
+        let price = 0;
+        if (isOver && devigged.length >= 1) {
+          price = 1 / devigged[0];
+        } else if (isUnder && devigged.length >= 2) {
+          price = 1 / devigged[1];
+        }
         const option: OptionPrice = {
           name: label,
-          price: devigged[idx] ? 1 / devigged[idx] : 0,
+          price,
           point: o.point ?? undefined,
         };
 
@@ -80,10 +111,7 @@ function buildMatrix(event: GetEventOddsResult, marketKey: string) {
     }
 
     for (const o of market.outcomes) {
-      const label =
-        (o.description?.trim() ?? o.name?.trim()) +
-        (o.point != null ? `_${o.point}` : "");
-
+      const label = getLabelFromOutcome(o, true);
       if (!label) continue;
 
       const option: OptionPrice = {
@@ -131,7 +159,8 @@ const OddsTable: React.FC<{
   marketKey: string;
   title?: string;
   isOnEventPage?: boolean;
-}> = ({ event, marketKey, title, isOnEventPage }) => {
+  isAdditionalMarket?: boolean;
+}> = ({ event, marketKey, title, isOnEventPage, isAdditionalMarket }) => {
   const matrix = useMemo(
     () => buildMatrix(event, marketKey),
     [event, marketKey]
@@ -145,6 +174,8 @@ const OddsTable: React.FC<{
   if (!optionToPrices || Object.keys(optionToPrices).length === 0) {
     return <></>;
   }
+
+  console.log(event, marketKey, optionToPrices);
 
   return (
     <div
@@ -206,6 +237,7 @@ const OddsTable: React.FC<{
               ev={evCalc}
               prices={prices.filter((p) => p.key !== deVigLabel)}
               nvpPrice={row.booksPrices[deVigLabel]?.price ?? null}
+              isAdditionalMarket={isAdditionalMarket}
             />
           );
         })}

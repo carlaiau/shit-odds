@@ -30,5 +30,9 @@ export async function GET(req: Request, ctx: { params: Promise<Params> }) {
     return NextResponse.json({ error: "fetch failed" }, { status: 500 });
   }
 
-  return NextResponse.json(data);
+  return NextResponse.json(data, {
+    headers: {
+      "Cache-Control": "public, max-age=300, stale-while-revalidate=60",
+    },
+  });
 }

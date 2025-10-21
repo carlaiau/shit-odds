@@ -8,6 +8,7 @@ type OptionRowProps = {
   ev?: number | null;
   prices: BookieWithPrice[];
   nvpPrice?: number | null;
+  isAdditionalMarket?: boolean;
 };
 
 const abbreviation = (name: string) => {
@@ -17,7 +18,13 @@ const abbreviation = (name: string) => {
     .join("");
 };
 
-const MobileOptionRow = ({ label, ev, prices, nvpPrice }: OptionRowProps) => {
+const MobileOptionRow = ({
+  label,
+  ev,
+  prices,
+  nvpPrice,
+  isAdditionalMarket,
+}: OptionRowProps) => {
   const [open, setOpen] = useState(false);
 
   const howManyWithPrice = prices.filter((p) => p.price).length;
@@ -48,6 +55,7 @@ const MobileOptionRow = ({ label, ev, prices, nvpPrice }: OptionRowProps) => {
 
   const onePrice = howManyWithPrice == 1;
 
+  //console.log({ label, prices });
   return (
     <div className="border-b border-punt-200 dark:border-zinc-600 py-2">
       {/* Summary row */}
@@ -65,7 +73,7 @@ const MobileOptionRow = ({ label, ev, prices, nvpPrice }: OptionRowProps) => {
               <></>
             )}
           </div>
-          {typeof ev === "number" && ev > 0 && (
+          {isAdditionalMarket && typeof ev === "number" && ev > 0 && (
             <div className="w-full flex justify-start py-2 items-center gap-2">
               <span className="rounded bg-green-600  py-0.5 px-2 text-white font-bold">
                 {ev.toFixed(2) + "%"}
@@ -125,7 +133,7 @@ const MobileOptionRow = ({ label, ev, prices, nvpPrice }: OptionRowProps) => {
           </span>
         </div>
 
-        {nvpPrice ? (
+        {isAdditionalMarket && nvpPrice ? (
           <div className="w-full flex items-center justify-between gap-2 mt-1">
             <div className="flex items-center justify-start gap-1">
               <span className="text-xs text-punt-400 dark:text-punt-300 font-sans">

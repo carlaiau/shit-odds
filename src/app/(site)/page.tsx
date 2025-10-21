@@ -21,12 +21,17 @@ const Index = async () => {
       <p className="my-4 lg:text-[100px] text-5xl">💩 ShitOdds</p>
       <Subheading className="my-4">
         Odds comparison, and EV compared to De-vigged Pinnacle. No ads.
-        Presently Optimized for NFL Props.
+        Presently Optimized for NFL and NBA player Props.
       </Subheading>
-      <div className="mb-10 text-left">
+      <div className="flex gap-2 mb-10 text-left">
         <div className="bg-white inline-block  rounded-md border border-punt-300 dark:bg-punt-900 dark:border-punt-700">
           <Link to={`/american-football/americanfootball-nfl/`}>
             <p className="capitalize text-xl lg:text-xl px-3 py-1">NFL</p>
+          </Link>
+        </div>
+        <div className="bg-white inline-block  rounded-md border border-punt-300 dark:bg-punt-900 dark:border-punt-700">
+          <Link to={`/basketball/basketball-nba`}>
+            <p className="capitalize text-xl lg:text-xl px-3 py-1">NBA</p>
           </Link>
         </div>
       </div>

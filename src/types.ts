@@ -1,4 +1,4 @@
-import type { paths } from "./schema";
+import type { paths, components } from "./schema";
 
 export type GetSportsResult =
   paths["/v4/sports"]["get"]["responses"]["200"]["content"]["application/json"][number];
@@ -40,3 +40,5 @@ export type SupportedMarket = {
   filteredFor?: string; // sport key that this market is only relevant for
   dontAbbreviate?: boolean; // don't abbreviate the label in the UI
 };
+
+export type Outcome = components["schemas"]["Outcome"];
