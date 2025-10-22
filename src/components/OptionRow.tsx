@@ -55,7 +55,7 @@ const MobileOptionRow = ({
 
   const onePrice = howManyWithPrice == 1;
 
-  //console.log({ label, prices });
+  console.log({ label, prices });
   return (
     <div className="border-b border-punt-200 dark:border-zinc-600 py-2">
       {/* Summary row */}
@@ -69,6 +69,11 @@ const MobileOptionRow = ({
 
             {splitLabel.length > 1 ? (
               <span className="text-sm font-sans">{splitLabel[1]}</span>
+            ) : (
+              <></>
+            )}
+            {splitLabel.length > 2 ? (
+              <span className="text-sm font-sans">{splitLabel[2]}</span>
             ) : (
               <></>
             )}

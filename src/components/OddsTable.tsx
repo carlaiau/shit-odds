@@ -30,7 +30,7 @@ const getLabelFromOutcome = (o: Outcome, withName?: boolean) => {
     (o.description?.trim() ?? o.name?.trim()) +
     (withName === true
       ? o.name && ["over", "under"].includes(o.name.toLowerCase())
-        ? "_" + o.name.toLowerCase().trim() + "_"
+        ? "_" + o.name.toLowerCase().trim()
         : ""
       : "") +
     (o.point != null ? `_${o.point}` : "")
