@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getOddsForEventServer } from "@/lib/odds";
 import { getSettingsFromCookies } from "@/lib/settings";
 
-export const dynamic = "force-dynamic"; // or cache: 'no-store'
+export const dynamic = "no-cache"; // or cache: 'no-store'
 export const revalidate = 0;
 
 type Params = { sport: string; eventId: string };
@@ -32,7 +32,8 @@ export async function GET(req: Request, ctx: { params: Promise<Params> }) {
 
   return NextResponse.json(data, {
     headers: {
-      "Cache-Control": "public, max-age=300, stale-while-revalidate=60",
+      "Cache-Control": "no-store, no-cache, max-age=0, must-revalidate",
+      "CDN-Cache-Control": "no-store",
     },
   });
 }
