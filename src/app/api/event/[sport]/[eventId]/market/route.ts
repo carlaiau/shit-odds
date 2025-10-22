@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getOddsForEventServer } from "@/lib/odds";
 import { getSettingsFromCookies } from "@/lib/settings";
 
-export const dynamic = "no-cache"; // or cache: 'no-store'
+export const dynamic = "force-dynamic"; // or cache: 'no-store'
 export const revalidate = 0;
 
 type Params = { sport: string; eventId: string };
