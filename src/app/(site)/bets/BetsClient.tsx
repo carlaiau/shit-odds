@@ -112,10 +112,6 @@ const BetsClient = () => {
 
   const rows = [
     {
-      label: "total",
-      slice: betsData.length,
-    },
-    {
       label: "last 10",
       slice: 10,
     },
@@ -126,6 +122,10 @@ const BetsClient = () => {
     {
       label: "last 100",
       slice: 100,
+    },
+    {
+      label: "total",
+      slice: betsData.length,
     },
   ];
   return (
@@ -149,7 +149,6 @@ const BetsClient = () => {
                     <TableHeader>Selection</TableHeader>
                     <TableHeader>Odds</TableHeader>
                     <TableHeader>Stake</TableHeader>
-                    <TableHeader>At Risk</TableHeader>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -158,11 +157,9 @@ const BetsClient = () => {
                       <TableCell>{bet.Date}</TableCell>
                       <TableCell>{bet["Sport / League"]}</TableCell>
                       <TableCell>{bet["Fixture / Event"]}</TableCell>
-
                       <TableCell>{bet.Selection}</TableCell>
                       <TableCell>{bet.Odds}</TableCell>
                       <TableCell>{bet.Stake}</TableCell>
-                      <TableCell>{bet["At Risk"]}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
