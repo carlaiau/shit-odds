@@ -23,6 +23,14 @@ const Index = async () => {
         Odds comparison, and EV compared to De-vigged Pinnacle. No ads.
         Presently Optimized for NFL and NBA player Props.
       </Subheading>
+
+      <div className="bg-white inline-block  rounded-md border border-punt-300 dark:bg-punt-900 dark:border-punt-700 mb-2">
+        <Link to={`/bets/`}>
+          <p className="capitalize text-xl lg:text-xl px-3 py-1">
+            Current Punts
+          </p>
+        </Link>
+      </div>
       <div className="flex gap-2 mb-10 text-left">
         <div className="bg-white inline-block  rounded-md border border-punt-300 dark:bg-punt-900 dark:border-punt-700">
           <Link to={`/american-football/americanfootball-nfl/`}>
