@@ -44,7 +44,7 @@ export default async function Layout({
               <QuestionMarkCircleIcon className="h-5 w-5 text-punt-400" />
             </SidebarItem>
             <SidebarItem to="/bets">
-              <SidebarLabel>Bets</SidebarLabel>
+              <SidebarLabel>Bets and performance</SidebarLabel>
               <BanknotesIcon className="h-5 w-5 text-punt-400" />
             </SidebarItem>
             <SidebarItem to="https://github.com/carlaiau/shit-odds">

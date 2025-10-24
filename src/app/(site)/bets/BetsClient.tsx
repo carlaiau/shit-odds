@@ -168,10 +168,17 @@ const BetsClient = () => {
                       : -1
                   )
                   .map((bet, index) => (
-                    <TableRow key={index}>
+                    <TableRow
+                      key={index}
+                      className={
+                        bet["Sport / League"] == "NBA"
+                          ? "bg-yellow-100/40"
+                          : "bg-purple-100/40"
+                      }
+                    >
                       <TableCell>
-                        <div className="flex gap-2 items-center">
-                          <span className="text-base">
+                        <div className="flex gap-4 items-center pl-2">
+                          <span className="text-lg">
                             {bet["Sport / League"] == "NBA" ? "🏀" : "🏈"}
                           </span>
                           {bet["Fixture / Event"]}
