@@ -158,7 +158,6 @@ const BetsClient = () => {
                   <TableHeader>Selection</TableHeader>
                   <TableHeader>Odds</TableHeader>
                   <TableHeader>Stake</TableHeader>
-                  <TableHeader></TableHeader>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -181,16 +180,6 @@ const BetsClient = () => {
                       <TableCell>{bet.Selection}</TableCell>
                       <TableCell>{bet.Odds}</TableCell>
                       <TableCell>{bet.Stake}</TableCell>
-                      <TableCell>
-                        {bet.Date ? (
-                          format(
-                            parse(bet.Date, "dd/MM/yyyy", new Date()),
-                            "eee do"
-                          )
-                        ) : (
-                          <></>
-                        )}
-                      </TableCell>
                     </TableRow>
                   ))}
               </TableBody>
