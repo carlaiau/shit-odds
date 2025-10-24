@@ -11,7 +11,7 @@ import {
 } from "@/catalyst/table";
 import Head from "next/head";
 import Papa from "papaparse";
-import { parse } from "date-fns";
+import { format, parse } from "date-fns";
 import { useEffect, useState } from "react";
 
 type BetRow = {
@@ -112,22 +112,28 @@ const BetsClient = () => {
 
   const rows = [
     {
-      label: "last 10",
-      slice: 10,
+      label: "Last 20 Bets",
+      slice: 20,
     },
     {
-      label: "last 50",
-      slice: 50,
-    },
-    {
-      label: "last 100",
+      label: "Last 100",
       slice: 100,
     },
     {
-      label: "total",
+      label: "Total",
       slice: betsData.length,
     },
   ];
+
+  if (!betsData.length) {
+    return <div>Loading bets data...</div>;
+  }
+
+  const totalPending = pendingBetsData.reduce(
+    (acc, bet) =>
+      acc + (bet.Stake ? parseFloat(bet.Stake.replace(/[^\d.]/g, "")) : 0),
+    0
+  );
   return (
     <>
       <div className="bg-white inline-block rounded-md border border-punt-300 dark:bg-punt-900 dark:border-punt-700 mb-2 ml-5">
@@ -138,136 +144,169 @@ const BetsClient = () => {
       <div className="p-5 flex flex-col gap-5">
         {pendingBetsData.length > 0 ? (
           <>
-            <h2 className="text-2xl font-semibold mb-2">Pending Bets</h2>
-            <div className="bg-white dark:bg-zinc-800 p-2 rounded">
-              <Table dense>
-                <TableHead>
-                  <TableRow>
-                    <TableHeader>Date</TableHeader>
-                    <TableHeader>Sport</TableHeader>
-                    <TableHeader>Fixture / Event</TableHeader>
-                    <TableHeader>Selection</TableHeader>
-                    <TableHeader>Odds</TableHeader>
-                    <TableHeader>Stake</TableHeader>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {pendingBetsData.map((bet, index) => (
+            <div className="flex justify-between items-center mb-2">
+              <h2 className="text-xl">Pending</h2>
+              <h2 className="text-xl">
+                {pendingBetsData.length} Bets - ${totalPending.toFixed(2)}
+              </h2>
+            </div>
+
+            <Table grid dense className="bg-white/50">
+              <TableHead>
+                <TableRow>
+                  <TableHeader>Event</TableHeader>
+                  <TableHeader>Selection</TableHeader>
+                  <TableHeader>Odds</TableHeader>
+                  <TableHeader>Stake</TableHeader>
+                  <TableHeader></TableHeader>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {pendingBetsData
+                  .sort((a, b) =>
+                    (a["Fixture / Event"] ?? 0) > (b["Fixture / Event"] ?? 0)
+                      ? 1
+                      : -1
+                  )
+                  .map((bet, index) => (
                     <TableRow key={index}>
-                      <TableCell>{bet.Date}</TableCell>
-                      <TableCell>{bet["Sport / League"]}</TableCell>
-                      <TableCell>{bet["Fixture / Event"]}</TableCell>
+                      <TableCell>
+                        <div className="flex gap-2 items-center">
+                          <span className="text-base">
+                            {bet["Sport / League"] == "NBA" ? "🏀" : "🏈"}
+                          </span>
+                          {bet["Fixture / Event"]}
+                        </div>
+                      </TableCell>
                       <TableCell>{bet.Selection}</TableCell>
                       <TableCell>{bet.Odds}</TableCell>
                       <TableCell>{bet.Stake}</TableCell>
+                      <TableCell>
+                        {bet.Date ? (
+                          format(
+                            parse(bet.Date, "dd/MM/yyyy", new Date()),
+                            "eee do"
+                          )
+                        ) : (
+                          <></>
+                        )}
+                      </TableCell>
                     </TableRow>
                   ))}
-                </TableBody>
-              </Table>
-            </div>
+              </TableBody>
+            </Table>
           </>
         ) : (
           <></>
         )}
         <Heading>Performance</Heading>
-        <div className="bg-white dark:bg-zinc-800 p-2 rounded">
-          <Table dense>
+        <Table grid dense>
+          <TableHead>
+            <TableRow>
+              <TableHeader></TableHeader>
+              <TableHeader>Bets</TableHeader>
+              <TableHeader>Wins</TableHeader>
+              <TableHeader>Turnover</TableHeader>
+              <TableHeader>Profit</TableHeader>
+              <TableHeader>ROI</TableHeader>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map(({ label, slice }) => (
+              <TableRow
+                className={
+                  profit(slice) >= 0 ? "bg-green-300/50" : "bg-red-300/50"
+                }
+                key={label}
+              >
+                <TableCell>{label}</TableCell>
+                <TableCell>{betsData.slice(0, slice).length}</TableCell>
+                <TableCell>
+                  {
+                    betsData.slice(0, slice).filter((bet) => bet.Win === "Y")
+                      .length
+                  }
+                </TableCell>
+                <TableCell>{formatted(turnover(slice))}</TableCell>
+                <TableCell>{formatted(profit(slice))}</TableCell>
+                <TableCell>
+                  {((profit(slice) / turnover(slice)) * 100).toFixed(2)}%
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+
+        <Heading>Completed Bets</Heading>
+        <Subheading>Showing last 100 bets</Subheading>
+        {
+          <Table dense grid>
             <TableHead>
               <TableRow>
-                <TableHeader></TableHeader>
-                <TableHeader>Bets</TableHeader>
-                <TableHeader>Wins</TableHeader>
-                <TableHeader>Losses</TableHeader>
-                <TableHeader>Refunds</TableHeader>
-                <TableHeader>Turnover</TableHeader>
-                <TableHeader>Profit</TableHeader>
-                <TableHeader>ROI</TableHeader>
+                <TableHeader>Date</TableHeader>
+                <TableHeader>Event</TableHeader>
+                <TableHeader>Selection</TableHeader>
+                <TableHeader>Odds</TableHeader>
+                <TableHeader>Stake</TableHeader>
+                <TableHeader>Win</TableHeader>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map(({ label, slice }) => (
+              {betsData.slice(0, 100).map((bet, index) => (
                 <TableRow
-                  className={profit(slice) >= 0 ? "bg-green-100" : "bg-red-100"}
-                  key={label}
+                  key={index}
+                  className={
+                    bet.Win === "Y"
+                      ? "bg-green-300/50"
+                      : bet.Win == "R"
+                      ? "bg-amber-300/50"
+                      : "bg-red-300/50"
+                  }
                 >
-                  <TableCell>{label}</TableCell>
-                  <TableCell>{betsData.slice(0, slice).length}</TableCell>
                   <TableCell>
-                    {
-                      betsData.slice(0, slice).filter((bet) => bet.Win === "Y")
-                        .length
-                    }
+                    {bet.Date ? (
+                      format(
+                        parse(bet.Date, "dd-LLL-yy", new Date()),
+                        "eee do LLL"
+                      )
+                    ) : (
+                      <></>
+                    )}
                   </TableCell>
                   <TableCell>
-                    {
-                      betsData.slice(0, slice).filter((bet) => bet.Win === "N")
-                        .length
-                    }
+                    <div className="flex gap-5 items-center">
+                      <span className="text-base">
+                        {bet["Sport / League"] == "NBA" ? "🏀" : "🏈"}
+                      </span>
+                      {bet["Fixture / Event"]}
+                    </div>
                   </TableCell>
+                  <TableCell>{bet.Selection}</TableCell>
+                  <TableCell>{bet.Odds}</TableCell>
+                  <TableCell>{bet.Stake}</TableCell>
                   <TableCell>
-                    {
-                      betsData.slice(0, slice).filter((bet) => bet.Win === "R")
-                        .length
-                    }
-                  </TableCell>
-                  <TableCell>{formatted(turnover(slice))}</TableCell>
-                  <TableCell>{formatted(profit(slice))}</TableCell>
-                  <TableCell>
-                    {((profit(slice) / turnover(slice)) * 100).toFixed(2)}%
+                    {bet.Win == "Y"
+                      ? "Won"
+                      : bet.Win == "R"
+                      ? "Refund"
+                      : "Lost"}
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-        </div>
-
-        <Heading>Completed Bets</Heading>
-        <Subheading>Showing last 100 bets</Subheading>
-        {
-          <div className="bg-white dark:bg-zinc-800 p-2 rounded">
-            <Table className="mb-10" dense>
-              <TableHead>
-                <TableRow>
-                  <TableHeader>Date</TableHeader>
-                  <TableHeader>Sport</TableHeader>
-                  <TableHeader>Fixture / Event</TableHeader>
-                  <TableHeader>Selection</TableHeader>
-                  <TableHeader>Odds</TableHeader>
-                  <TableHeader>Stake</TableHeader>
-                  <TableHeader>Win</TableHeader>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {betsData.slice(0, 100).map((bet, index) => (
-                  <TableRow
-                    key={index}
-                    className={
-                      bet.Win === "Y"
-                        ? "bg-green-100"
-                        : bet.Win == "R"
-                        ? "bg-amber-100"
-                        : "bg-red-100"
-                    }
-                  >
-                    <TableCell>{bet.Date}</TableCell>
-                    <TableCell>{bet["Sport / League"]}</TableCell>
-                    <TableCell>{bet["Fixture / Event"]}</TableCell>
-                    <TableCell>{bet.Selection}</TableCell>
-                    <TableCell>{bet.Odds}</TableCell>
-                    <TableCell>{bet.Stake}</TableCell>
-                    <TableCell>
-                      {bet.Win == "Y"
-                        ? "Won"
-                        : bet.Win == "R"
-                        ? "Refund"
-                        : "Lost"}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
         }
+        <p>
+          To See All, please visit the spreadsheet{" "}
+          <a
+            className="uppercase underline"
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://docs.google.com/spreadsheets/d/151vskowGCWHRLAjKKBFN6H33tBL0KxpSHg3Tq4f3vI8/edit?gid=1540405304#gid=1540405304"
+          >
+            here
+          </a>
+        </p>
       </div>
     </>
   );

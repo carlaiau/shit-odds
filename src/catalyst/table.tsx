@@ -49,7 +49,7 @@ export function Table({
         >
           <div
             className={clsx(
-              "inline-block min-w-full align-middle",
+              "inline-block min-w-full align-middle border border-b-0",
               !bleed && "sm:px-(--gutter)"
             )}
           >
@@ -70,7 +70,7 @@ export function TableHead({
   return (
     <thead
       {...props}
-      className={clsx(className, "text-zinc-500 dark:text-zinc-400")}
+      className={clsx(className, "text-black font-medium dark:text-zinc-400")}
     />
   );
 }
@@ -134,9 +134,9 @@ export function TableHeader({
       {...props}
       className={clsx(
         className,
-        "border-b border-b-zinc-950/10 px-4 py-2 font-medium first:pl-(--gutter,--spacing(2)) last:pr-(--gutter,--spacing(2)) dark:border-b-white/10",
+        "border-b-1 bg-white px-4 py-2 font-medium first:pl-(--gutter,--spacing(2)) last:pr-(--gutter,--spacing(2)) dark:border-b-white/10",
         grid &&
-          "border-l border-l-zinc-950/5 first:border-l-0 dark:border-l-white/5",
+          "border-l border-l-zinc-500 first:border-l-0 dark:border-l-white/5",
         !bleed && "sm:first:pl-1 sm:last:pr-1"
       )}
     />
@@ -159,11 +159,12 @@ export function TableCell({
       className={clsx(
         className,
         "relative px-4 first:pl-(--gutter,--spacing(2)) last:pr-(--gutter,--spacing(2))",
-        !striped && "border-b border-zinc-950/5 dark:border-white/5",
+        !striped && "border-b border-zinc-500 dark:border-white/",
         grid &&
-          "border-l border-l-zinc-950/5 first:border-l-0 dark:border-l-white/5",
+          "border-l border-l-zinc-500 first:border-l-0 dark:border-l-white/5",
         dense ? "py-2.5" : "py-4",
-        !bleed && "sm:first:pl-1 sm:last:pr-1"
+        !bleed && "sm:first:pl-1 sm:last:pr-1",
+        "text-xs"
       )}
     >
       {href && (

@@ -24,10 +24,10 @@ const Index = async () => {
         Presently Optimized for NFL and NBA player Props.
       </Subheading>
 
-      <div className="bg-white inline-block  rounded-md border border-punt-300 dark:bg-punt-900 dark:border-punt-700 mb-2">
+      <div className="bg-white inline-block  rounded-md border border-punt-300 dark:bg-punt-900 dark:border-punt-700 mb-8">
         <Link to={`/bets/`}>
           <p className="capitalize text-xl lg:text-xl px-3 py-1">
-            Current Punts
+            Current Bets and Results
           </p>
         </Link>
       </div>
