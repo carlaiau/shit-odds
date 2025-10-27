@@ -26,16 +26,9 @@ const DEFAULT_ADDITIONAL_MARKETS = [
   "player_reception_yds",
   "player_rush_yds",
   "player_pass_yds",
-  "player_reception_yds_alternate",
-  "player_rush_yds_alternate",
-  "player_pass_yds_alternate",
-  "player_anytime_td",
   "player_assists",
   "player_points",
   "player_rebounds",
-  "player_assists_alternate",
-  "player_points_alternate",
-  "player_rebounds_alternate",
 ];
 export default function EventClient({
   sportKey,
