@@ -19,16 +19,28 @@ const Index = async () => {
   return (
     <>
       <p className="my-4 lg:text-[100px] text-5xl">💩 ShitOdds</p>
-      <Subheading className="my-4">
-        Odds comparison, and EV compared to De-vigged Pinnacle. No ads.
-        Presently Optimized for NFL and NBA player Props.
+      <Heading className="my-4 max-w-[800px]">
+        Odds comparison and expected value (EV) calculated against de-vigged
+        Pinnacle lines. Currently optimized for NFL and NBA player props.
+      </Heading>
+
+      <Subheading className="my-4 max-w-[800px]">
+        I've stopped betting and won't be renewing my data provider's API key.
+        If you've found this site helpful and would like to contribute toward
+        API costs, I'll keep the full experience running for you. Otherwise,
+        you're welcome to self-host it via the{" "}
+        <a
+          className="underline text-green-600"
+          href="https://github.com/carlaiau/shit-odds"
+        >
+          GitHub repo
+        </a>
+        . Thanks to everyone who has supported or donated in the past 🙏
       </Subheading>
 
       <div className="bg-white inline-block  rounded-md border border-punt-300 dark:bg-punt-900 dark:border-punt-700 mb-8">
         <Link to={`/bets/`}>
-          <p className="capitalize text-xl lg:text-xl px-3 py-1">
-            Current Bets and Results
-          </p>
+          <p className="capitalize text-xl lg:text-xl px-3 py-1">Results</p>
         </Link>
       </div>
       <div className="flex gap-2 mb-10 text-left">
